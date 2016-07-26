@@ -1,0 +1,86 @@
+/* --------------------------
+Keyframes
+--------------------------- */
+
+
+@keyframes slide {
+50% {
+  transform: translate3d(0,-10px,0);
+}
+80% {
+  transform: translate3d(0,10px,0);
+}
+100% {
+  transform: translate3d(0,0,0);
+}
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+}
+
+
+
+@keyframes turn {
+  0% {
+    transform: rotate(0) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: rotate(375deg) scale(1.1);
+  }
+  80% {
+    transform: rotate(355deg) scale(0.9);/*Scale & rotate backwards for bounce effect*/
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+@keyframes pulse {
+  50% {
+    transform: scale(1.1);
+  }
+}
+/* Animate the offset in a path's stroke*/
+@keyframes offset{
+  100%{
+    stroke-dashoffset: 0;
+  }
+}
+/* Fill text of #logo-brand on page load after fill set to transparent in html */
+@keyframes fill-brand {
+100% {
+  fill: #EAAA7F;
+}
+}
+
+@keyframes fill-nav {
+100% {
+fill:#39add1;
+}
+}
+
+@keyframes fill-hover {
+100% {
+fill: #2D3339;
+
+}
+}
+
+$bounce-color: darken($medium-purple, 20%);
+
+@keyframes bounceOut {
+        0%{ box-shadow: 0 0 0 2.5px $bounce-color; opacity:1;}
+        25%{ box-shadow: 0 0 0 1px $bounce-color; opacity:1;}
+        50%{ box-shadow: 0 0 0 3px $bounce-color; opacity:1; }
+        75%{ box-shadow: 0 0 0 2.5px $bounce-color; opacity:1;}
+        100%{ box-shadow: 0 0 0 3px $bounce-color; opacity:1;}
+}
