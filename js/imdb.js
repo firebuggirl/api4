@@ -1,4 +1,4 @@
-var OMDBAPI = "http://www.omdbapi.com/?";
+var OMDBAPI = "https://www.omdbapi.com/?";
 var movie = "Woodstock";
 var movieHTML = "";
 $.getJSON(OMDBAPI, {

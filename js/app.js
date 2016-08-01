@@ -487,7 +487,7 @@ getAlbumInfo3(function(result) {
   //     tinysort('ul#albums4>li', { selector: 'img', attr: 'alt' });
   // });
 
-var OMDBAPI = "http://www.omdbapi.com/?";
+var OMDBAPI = "https://www.omdbapi.com/?";
 var movie = "Woodstock";
 var movieHTML = "";
 $.getJSON(OMDBAPI, {
