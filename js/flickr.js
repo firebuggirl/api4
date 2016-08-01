@@ -4,9 +4,6 @@ $(document).ready(function() {
 // Pull photos from Flickr
 var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
 var animal = $(this).text();
-var title =  $(this).title;
-  var date =  $(this).date;
-
 
 
 var flickrOptions = {
@@ -23,15 +20,17 @@ function displayPhotos(data) {
   var saved_results = data;
   var indexOfImage;
   $.each(data.items,function(i,photo) {
-    if(i < 15){
 
-   photoHTML += '<li class="layout">';
-
-   photoHTML += '<a href="' + photo.media.m + '" data-lightbox="image" data-title="';
-                photoHTML += 'Photo Title: ' + data.title + '</br>';
-                photoHTML += 'Photo Date: ' + data.date + '</br>';
+    if(i < 16){
+               console.log(data.items);//log out data items to find key/value pairs in data array
+                photoHTML += '<li class="layout">';
+                photoHTML += '<a href="' + data.items[i].media.m + '" data-lightbox="image" data-title="';
+                photoHTML += 'Photo Title: ' + data.items[i].title + '</br>';
+                photoHTML += 'Author: ' + data.items[i].author + '</br>';
+                photoHTML += 'Photo Date: ' + data.items[i].date_taken + '</br>';
+                photoHTML += 'Photo description: ' + data.items[i].description.replace(/<(?:.|\n)*?>/gm, ''); + '</br>';//use reg expression to delete HTML tags thar are inside of description key value-for proper page load and keep gallery from breaking
                 photoHTML += '">';
-                photoHTML += '<img alt="" src="' + photo.media.m + '" photo_index ="' + i + '"></a></li>';
+                photoHTML += '<img alt="" src="' + data.items[i].media.m + '" photo_index ="' + i + '"></a></li>';
 
   }
 
@@ -42,14 +41,6 @@ function displayPhotos(data) {
 
 
 
-//Prevent flickr page/overlay load
-  // $('li').on('click', '.img-responsive', function(e) {
-  //         e.preventDefault();
-  //
-  //
-  //
-  // }); //end li click function event
-
 }//end callback for the api request
 $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 
@@ -59,7 +50,7 @@ $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 //
 // Beginning of 2nd API request
 
-$("button").click(function (event) {
+$(".flickrButtons").click(function (event) {
     event.preventDefault();//
     //event.stopPropagation();
     // the AJAX part

@@ -8,9 +8,6 @@ $(document).ready(function() {
 // Pull photos from Flickr
 var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
 var animal = $(this).text();
-var title =  $(this).title;
-  var date =  $(this).date;
-
 
 
 var flickrOptions = {
@@ -27,15 +24,17 @@ function displayPhotos(data) {
   var saved_results = data;
   var indexOfImage;
   $.each(data.items,function(i,photo) {
-    if(i < 15){
 
-   photoHTML += '<li class="layout">';
-
-   photoHTML += '<a href="' + photo.media.m + '" data-lightbox="image" data-title="';
-                photoHTML += 'Photo Title: ' + data.title + '</br>';
-                photoHTML += 'Photo Date: ' + data.date + '</br>';
+    if(i < 16){
+               console.log(data.items);//log out data items to find key/value pairs in data array
+                photoHTML += '<li class="layout">';
+                photoHTML += '<a href="' + data.items[i].media.m + '" data-lightbox="image" data-title="';
+                photoHTML += 'Photo Title: ' + data.items[i].title + '</br>';
+                photoHTML += 'Author: ' + data.items[i].author + '</br>';
+                photoHTML += 'Photo Date: ' + data.items[i].date_taken + '</br>';
+                photoHTML += 'Photo description: ' + data.items[i].description.replace(/<(?:.|\n)*?>/gm, ''); + '</br>';//use reg expression to delete HTML tags thar are inside of description key value-for proper page load and keep gallery from breaking
                 photoHTML += '">';
-                photoHTML += '<img alt="" src="' + photo.media.m + '" photo_index ="' + i + '"></a></li>';
+                photoHTML += '<img alt="" src="' + data.items[i].media.m + '" photo_index ="' + i + '"></a></li>';
 
   }
 
@@ -46,14 +45,6 @@ function displayPhotos(data) {
 
 
 
-//Prevent flickr page/overlay load
-  // $('li').on('click', '.img-responsive', function(e) {
-  //         e.preventDefault();
-  //
-  //
-  //
-  // }); //end li click function event
-
 }//end callback for the api request
 $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 
@@ -63,7 +54,7 @@ $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 //
 // Beginning of 2nd API request
 
-$("button").click(function (event) {
+$(".flickrButtons").click(function (event) {
     event.preventDefault();//
     //event.stopPropagation();
     // the AJAX part
@@ -93,34 +84,441 @@ $("button").click(function (event) {
 
 
 
-$(document).ready(function(){
-  if(window.innerWidth <= 414){
-  $('#nav').hide();
-  $('.heading').html('<button id="toggleButton">Flickr Dogs</button>');
+// $(document).ready(function(){
+//   if(window.innerWidth <= 414){
+//   $('#nav').hide();
+//   $('.heading').html('<button id="toggleButton">Flickr Dogs</button>');
+//
+//   }
+// });
+//
+// $('.heading').on('click', function(){
+//   $('#nav').toggle('slow');
+// });
+//
+// $(window).resize(function(){
+// 	if(window.innerWidth >= 414) {
+// 		$("#nav").show();
+//       $('.heading').html('<h1>My favorite dog photos from Flickr</h1>');
+//
+//
+// 	}
+// });
+//
+// $(window).resize(function(){
+// 	if(window.innerWidth < 414) {
+//
+//       	$("#nav").hide();
+//           $('.heading').html('<button id="toggleButton">Flickr Dogs</button>');
+//
+// 	}
+// });
 
-  }
+
+var loadOne = $(document).ready(function() {
+var spotifyAPI = "https://api.spotify.com/v1/search";
+var albumHTML = "";
+var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
+var search = "Rolling Stones";
+
+//function to get individual album api:
+function getAlbumInfo(callback) {
+    $.getJSON(spotifyAPI, {
+        q: search,
+        type: "album",
+        limit: 12
+    }, function(data) {
+
+        var array = [];
+
+        $.each(data.albums.items, function(i, album) {
+           console.log(data.albums.items);
+            array.push(spotifyAlbumAPI + album.id);
+
+        });
+
+
+        callback(array);
+
+
+    });
+
+
+}
+
+getAlbumInfo(function(result) {
+
+    //get additional info from api to create photo list:
+    function createAlbumList() {
+
+        $.each(result, function(i, album) {
+            $.getJSON(result[i], {
+                q: search,
+                type: "album",
+                  limit: 12
+            }, function(data) {
+
+                albumHTML += '<li data-name="' + data.artists[0].name + '">';
+                albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
+                albumHTML += 'Album Name: ' + data.name + '</br>';
+                albumHTML += 'Artist Name: ' + data.artists[0].name + '</br>';
+                albumHTML += 'Release Date: ' + data.release_date + '</br>';
+                albumHTML += 'SpotifyURL: ' + data.external_urls.spotify + '</br>';
+                albumHTML += '">';
+                albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
+
+                $('#albums').html(albumHTML);
+            });
+        });
+    }
+
+    createAlbumList();
 });
 
-$('.heading').on('click', function(){
-  $('#nav').toggle('slow');
+ });
+
+/////////////////////////////////////
+///
+///End 1st API call for Rolling Stones
+/////////////////////////////////////
+/////////////////////////////////////
+
+
+var loadTwo = $(document).ready(function() {
+
+var spotifyAPI = "https://api.spotify.com/v1/search";
+var albumHTML = "";
+var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
+var search = "Black Rebel Motorcycle CLub";
+
+//function to get individual album api:
+function getAlbumInfo2(callback) {
+    $.getJSON(spotifyAPI, {
+        q: search,
+        type: "album",
+          limit: 12
+    }, function(data) {
+
+        var array = [];
+
+        $.each(data.albums.items, function(i, album) {
+            console.log(data.albums.items);
+            array.push(spotifyAlbumAPI + album.id);
+
+        });
+
+
+        callback(array);
+
+
+    });
+
+
+}
+
+getAlbumInfo2(function(result) {
+
+    //get additional info from api to create photo list:
+    function createAlbumList() {
+
+        $.each(result, function(i, album) {
+            $.getJSON(result[i], {
+                q: search,
+                type: "album",
+                  limit: 12
+            }, function(data) {
+
+                albumHTML += '<li data-name="' + data.artists[0].name + '">';
+                albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
+                albumHTML += 'Album Name: ' + data.name + '</br>';
+                albumHTML += 'Artist Name: ' + data.artists[0].name + '</br>';
+                albumHTML += 'Release Date: ' + data.release_date + '</br>';
+                albumHTML += 'SpotifyURL: ' + data.external_urls.spotify + '</br>';
+                albumHTML += '">';
+                albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
+
+                $('#albums2').html(albumHTML);
+            });
+        });
+    }
+
+    createAlbumList();
 });
 
-$(window).resize(function(){
-	if(window.innerWidth >= 414) {
-		$("#nav").show();
-      $('.heading').html('<h1>My favorite dog photos from Flickr</h1>');
 
-
-	}
 });
 
-$(window).resize(function(){
-	if(window.innerWidth < 414) {
+////////////////////////////////////////////////
+///////////////////////////////////////////////
+///END 2nd API call for BMRC
+///////////////////////////////////////////////
+////////////////////////////////////////////////
+var loadThree = $(document).ready(function() {
+var spotifyAPI = "https://api.spotify.com/v1/search";
+var albumHTML = "";
+var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
+var search = "Howlin' Wolf";
 
-      	$("#nav").hide();
-          $('.heading').html('<button id="toggleButton">Flickr Dogs</button>');
+//function to get individual album api:
+function getAlbumInfo3(callback) {
+    $.getJSON(spotifyAPI, {
+        q: search,
+        type: "album",
+        limit: 12
+    }, function(data) {
 
-	}
+        var array = [];
+
+        $.each(data.albums.items, function(i, album) {
+           console.log(data.albums.items);
+            array.push(spotifyAlbumAPI + album.id);
+
+        });
+
+
+        callback(array);
+
+
+    });
+
+
+}
+
+getAlbumInfo3(function(result) {
+
+    //get additional info from api to create photo list:
+    function createAlbumList() {
+
+        $.each(result, function(i, album) {
+            $.getJSON(result[i], {
+                q: search,
+                type: "album",
+                  limit: 12
+            }, function(data) {
+
+                albumHTML += '<li data-name="' + data.artists[0].name + '">';
+                albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
+                albumHTML += 'Album Name: ' + data.name + '</br>';
+                albumHTML += 'Artist Name: ' + data.artists[0].name + '</br>';
+                albumHTML += 'Release Date: ' + data.release_date + '</br>';
+                albumHTML += 'SpotifyURL: ' + data.external_urls.spotify + '</br>';
+                albumHTML += '">';
+                albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
+
+                $('#albums3').html(albumHTML);
+            });
+        });
+    }
+
+    createAlbumList();
+});
+
+ });
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///End 3rd API call for Howlin' Wolf
+///////////////////////////////////////////////
+////
+
+
+
+
+
+
+
+
+
+  $('.musicButton1').click(function(event) {
+    event.preventDefault();
+    //  tinysort('#albums>li', { q: 'Rolling Stones',  });
+    //
+    //
+
+    var spotifyAPI = "https://api.spotify.com/v1/search";
+    var albumHTML = "";
+    var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
+    var search = "Rolling Stones";
+
+    //function to get individual album api:
+    function getAlbumInfo(callback) {
+        $.getJSON(spotifyAPI, {
+            q: search,
+            type: "album",
+            limit: 12
+        }, function(data) {
+
+            var array = [];
+
+            $.each(data.albums.items, function(i, album) {
+
+                array.push(spotifyAlbumAPI + album.id);
+
+
+            });
+
+
+            callback(array);
+
+
+        });
+
+
+    }
+
+
+
+    getAlbumInfo(function(result) {
+
+        //get additional info from api to create photo list:
+        function createAlbumList() {
+
+            $.each(result, function(i, album) {
+                $.getJSON(result[i], {
+                    q: search,
+                    type: "album",
+                    limit: 12
+                }, function(data) {
+
+                    albumHTML += '<li data-name="' + data.artists[0].name + '">';
+                    albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
+                    albumHTML += 'Album Name: ' + data.name + '</br>';
+                    albumHTML += 'Artist Name: ' + data.artists[0].name + '</br>';
+                    albumHTML += 'Release Date: ' + data.release_date + '</br>';
+                    albumHTML += 'SpotifyURL: ' + data.external_urls.spotify + '</br>';
+                    albumHTML += '">';
+                    albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
+
+                    $('#albums').html(albumHTML);
+                });
+            });
+        }
+
+        createAlbumList();
+    });
+    //
+    //
+    //
+  //loadTwo.hide();
+
+  });
+
+
+
+  $('.musicButton2').click(function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    //  tinysort('#albums>li', { q: 'Rolling Stones',  });
+    //
+    //
+
+    var spotifyAPI = "https://api.spotify.com/v1/search";
+    var albumHTML = "";
+    var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
+    var search = "Black Rebel Motorcycle Club";
+
+    //function to get individual album api:
+    function getAlbumInfo(callback) {
+        $.getJSON(spotifyAPI, {
+            q: search,
+            type: "album",
+            limit: 12
+        }, function(data) {
+
+            var array = [];
+
+            $.each(data.albums.items, function(i, album) {
+
+                array.push(spotifyAlbumAPI + album.id);
+
+
+            });
+
+
+            callback(array);
+
+
+        });
+
+
+    }
+
+
+
+    getAlbumInfo(function(result) {
+
+        //get additional info from api to create photo list:
+        function createAlbumList() {
+
+            $.each(result, function(i, album) {
+                $.getJSON(result[i], {
+                    q: search,
+                    type: "album",
+                    limit: 12
+                }, function(data) {
+
+                    albumHTML += '<li data-name="' + data.artists[0].name + '">';
+                    albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
+                    albumHTML += 'Album Name: ' + data.name + '</br>';
+                    albumHTML += 'Artist Name: ' + data.artists[0].name + '</br>';
+                    albumHTML += 'Release Date: ' + data.release_date + '</br>';
+                    albumHTML += 'SpotifyURL: ' + data.external_urls.spotify + '</br>';
+                    albumHTML += '">';
+                    albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
+
+                    $('#albums2').html(albumHTML);
+                });
+            });
+        }
+
+        createAlbumList();
+    });
+
+
+
+
+
+  });
+
+
+
+
+  // $('.musicButton2').click(function() {
+  //     tinysort('ul#albums4>li', { selector: 'img', attr: 'alt' });
+  // });
+
+var OMDBAPI = "http://www.omdbapi.com/?";
+var movie = "Woodstock";
+var movieHTML = "";
+$.getJSON(OMDBAPI, {
+    s: movie,
+    r: "json"
+}, function(data) {
+
+    $.each(data.Search, function(i , movie) {
+       console.log(data.Search);
+        movieHTML += '<li class="layout" data-name="' + movie.Year + '">';
+        movieHTML += '<a href="' + movie.Poster + '" data-lightbox="albums" data-title="';
+        movieHTML += 'Title: ' + movie.Title + '</br>';
+        movieHTML += 'Release Date: ' + movie.Year + '</br>';
+        movieHTML += 'Movie ID: ' + movie.imdbID + '</br>';
+        movieHTML += '">';
+        movieHTML += '<img src="' + movie.Poster + '" alt="' + movie.Title + '"></a></li>';
+
+        $('#albums4').html(movieHTML);
+
+    });
+
+
+});
+
+
+$('.movieButton1').click(function() {
+    tinysort('ul#albums4>li', { attr: 'data-name' });
+});
+
+$('.movieButton2').click(function() {
+    tinysort('ul#albums4>li', { selector: 'img', attr: 'alt' });
 });
 
 /*!

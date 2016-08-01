@@ -43,7 +43,7 @@ h1{
 	text-align: center;
 	padding: 25px;
 	background: $charcoal;
-	position: fixed;
+	/*position: fixed;*/
 	width: 100%;
   display: flex;
   -webkit-display: flex;
@@ -191,40 +191,6 @@ ul.filter-select button:after {
 }
 
 
-.arrows {
-	width: 100%;
-	z-index: 60;
-	position: absolute;
-	display: flex;
-	justify-content: space-around;
-  position: fixed;
-  /*background: url(images/left-arrow.png) left 48% no-repeat;
-  background: url(images/right-arrow.png) right 48% no-repeat;*/
-  margin-top: calc(23% + 30px);
-}
-
-#leftArrow{
-  margin-left: -10%;
-  background-color: $beige;
-  border-radius: 50%;
-
-   &:hover{
-     transform: scale(0.9);
-     background-color: #FCAD0D;
-
-   }
-}
-
-#rightArrow{
-  margin-right: -10%;
-  background-color: $beige;
-  border-radius: 50%;
-    &:hover{
-      transform: scale(0.9);
-      background-color: #FCAD0D;
-    }
-}
-
 
 /* Link Styles */
 
@@ -249,7 +215,7 @@ a:hover {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-  margin-top: em(250px);
+  /*margin-top: em(250px);*/
   @include bp(mobile_xLarge){
     margin-top: 50px;
   }
@@ -267,5 +233,94 @@ a:hover {
 }
 #imageGallery .layout img:hover{
  @include imgScale;
+
+}
+
+#albums .layout img {
+  @include transformImg;
+  border: 3px solid $white;
+  margin-bottom: 30px;
+  height: 200px;
+  width: 200px;
+
+
+}
+
+#albums .layout img:hover{
+    @include transformImg;
+}
+
+#albums, #albums3, #albums4 {
+  margin: 0 auto;
+  margin-top: em(60px);
+	padding: 40px;
+	display: block;
+	max-width: 1040px;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	/*margin: 10px ;*/
+}
+
+#albums2 {
+  margin: 0 auto;
+  margin-top: em(60px);
+	padding: 40px;
+	display: block;
+	max-width: 1040px;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	/*margin: 10px ;*/
+}
+#albums3 {
+  margin: 0 auto;
+  margin-top: em(60px);
+	padding: 40px;
+	display: block;
+	max-width: 1040px;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	/*margin: 10px ;*/
+}
+
+#albums img{
+  @include transformImg;
+  border: 3px solid $white;
+  margin-bottom: 30px;
+  height: 200px;
+  width: 200px;
+}
+
+#albums2 img{
+  @include transformImg;
+  border: 3px solid $white;
+  margin-bottom: 30px;
+  height: 200px;
+  width: 200px;
+}
+
+#albums3 img{
+  @include transformImg;
+  border: 3px solid $white;
+  margin-bottom: 30px;
+  height: 200px;
+  width: 200px;
+}
+
+#albums4 .layout img{
+  @include transformImg;
+  border: 3px solid $white;
+  margin-bottom: 30px;
+  height: 200px;
+  width: 200px;
+}
+
+#albums4 .layout img::before{
+ display: none;
 
 }
