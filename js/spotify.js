@@ -20,9 +20,24 @@ function getAlbumInfo(callback) {
 
         var array = [];
 
+        // $.each(data.albums.items, function(i, album) {
+        //    console.log(data.albums.items);
+        //     array.push(spotifyAlbumAPI + album.id);
+        //
+        // });
+        //
         $.each(data.albums.items, function(i, album) {
            console.log(data.albums.items);
-            array.push(spotifyAlbumAPI + album.id);
+           // filter out albums/collections that are not my band's songs &/or albums
+            if((album.id == "6HWxqdryeaBrcVNExMyzXC")||(album.id == "2NeiklEJ3gQE7bV9cp27hZ")||(album.id == "5sah14CPmQ1v2FUp2AKDql")||(album.id == "2GLF9bjkeGaKSiPAyLEWRb"))
+         {
+
+         }
+         else
+         {
+          // push our songs and albums to the array
+          array.push(spotifyAlbumAPI + album.id);
+        }
 
         });
 
@@ -79,7 +94,7 @@ getAlbumInfo(function(result) {
   });
 
   $('.musicButton2').click(function() {
-      tinysort('ul#albums>li', { selector: 'img', attr: 'alt' });
+      tinysort('ul#albums>li', { selector: 'img', attr: 'photo_index' });
   });
 
   // $('.musicButton2').click(function() {

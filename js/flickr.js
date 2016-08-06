@@ -3,12 +3,17 @@ $(document).ready(function() {
 
 // Pull photos from Flickr
 var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+
+
+
 var animal = $(this).text();
 
 
 var flickrOptions = {
-  tags: "german shepherd, border collie, black terrier",
+//  tags: "german shepherd, border collie, black terrier",
   tagmode: "any",
+  id: "125100549@N08",
+
   format: "json"
 };
 
@@ -30,7 +35,7 @@ function displayPhotos(data) {
                 photoHTML += 'Photo Date: ' + data.items[i].date_taken + '</br>';
                 photoHTML += 'Photo description: ' + data.items[i].description.replace(/<(?:.|\n)*?>/gm, ''); + '</br>';//use reg expression to delete HTML tags thar are inside of description key value-for proper page load and keep gallery from breaking
                 photoHTML += '">';
-                photoHTML += '<img alt="" src="' + data.items[i].media.m + '" photo_index ="' + i + '"></a></li>';
+                photoHTML += '<img alt="" + src="' + data.items[i].media.m + '" photo_index ="' + i + '"></a></li>';
 
   }
 
@@ -50,25 +55,34 @@ $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 //
 // Beginning of 2nd API request
 
-$(".flickrButtons").click(function (event) {
-    event.preventDefault();//
-    //event.stopPropagation();
-    // the AJAX part
-    var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-    var animal = $(this).text();
-    var flickrOptions = {
-      tags: animal,
-      format: "json"
-    };
+// $(".flickrButtons").click(function (event) {
+//     event.preventDefault();//
+//     //event.stopPropagation();
+//     // the AJAX part
+//     var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+//     var animal = $(this).text();
+//     var flickrOptions = {
+//       tags: "new orleans, forest, louisiana",
+//       format: "json"
+//     };
+//
+//     $.getJSON(flickerAPI, flickrOptions, displayPhotos);
+//
+//
+//
+//
+$('.button1').click(function() {
+    tinysort('ul#imageGallery>li>a', { attr: 'href' });
+});
 
-    $.getJSON(flickerAPI, flickrOptions, displayPhotos);
+$('.button2').click(function() {
+    tinysort('ul#imageGallery>li>a>img', { attr: 'src' });
+});
 
 
 
 
-
-
-  });
+//  });
 
 
 
