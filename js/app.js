@@ -135,8 +135,7 @@ var loadOne = $(document).ready(function() {
 var spotifyAPI = "https://api.spotify.com/v1/search";
 var albumHTML = "";
 var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
-//var spotifyAlbumAPI ="https://open.spotify.com/album/3IYDzrfKn9I6zp8zYgUQmr";
-//var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/3IYDzrfKn9I6zp8zYgUQmr/tracks";
+
 
 var search = "Firebug";
 
@@ -150,22 +149,17 @@ function getAlbumInfo(callback) {
 
         var array = [];
 
-        // $.each(data.albums.items, function(i, album) {
-        //    console.log(data.albums.items);
-        //     array.push(spotifyAlbumAPI + album.id);
-        //
-        // });
-        //
+
         $.each(data.albums.items, function(i, album) {
            console.log(data.albums.items);
-           // filter out albums/collections that are not my band's songs &/or albums
+           // filter out albums/collections from array that are not my band's songs &/or albums..get IDs from array/objects logged out to console
             if((album.id == "6HWxqdryeaBrcVNExMyzXC")||(album.id == "2NeiklEJ3gQE7bV9cp27hZ")||(album.id == "5sah14CPmQ1v2FUp2AKDql")||(album.id == "2GLF9bjkeGaKSiPAyLEWRb"))
          {
 
          }
          else
          {
-          // push our songs and albums to the array
+          // push our albums to the array
           array.push(spotifyAlbumAPI + album.id);
         }
 
@@ -202,9 +196,7 @@ getAlbumInfo(function(result) {
                 albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
 
                 $('#albums').html(albumHTML);
-                // $('.musicButton1').click(function() {
-                //     tinysort('ul#albums>li', { attr: 'data-name' });
-                // });
+
 
                 $('.musicButton1').click(function() {
                     tinysort('ul#albums>li', { selector: 'img', attr: 'alt' });
@@ -227,43 +219,50 @@ getAlbumInfo(function(result) {
       tinysort('ul#albums>li', { selector: 'img', attr: 'photo_index' });
   });
 
-  // $('.musicButton2').click(function() {
-  //     tinysort('ul#albums2>li', { selector: 'img', attr: 'alt' });
-  // });
-
-var OMDBAPI = "https://www.omdbapi.com/?";
-var movie = "Woodstock";
-var movieHTML = "";
-$.getJSON(OMDBAPI, {
-    s: movie,
-    r: "json"
-}, function(data) {
-
-    $.each(data.Search, function(i , movie) {
-       console.log(data.Search);
-        movieHTML += '<li class="layout" data-name="' + movie.Year + '">';
-        movieHTML += '<a href="' + movie.Poster + '" data-lightbox="albums" data-title="';
-        movieHTML += 'Title: ' + movie.Title + '</br>';
-        movieHTML += 'Release Date: ' + movie.Year + '</br>';
-        movieHTML += 'Movie ID: ' + movie.imdbID + '</br>';
-        movieHTML += '">';
-        movieHTML += '<img src="' + movie.Poster + '" alt="' + movie.Title + '"></a></li>';
-
-        $('#albums4').html(movieHTML);
-
-    });
 
 
-});
+  var OMDBAPI = "https://www.omdbapi.com/?";
+  var movie = "Woodstock";
+  var movieHTML = "";
+  $.getJSON(OMDBAPI, {
+      s: movie,
+      r: "json"
+  }, function(data) {
+  var array = [];
+      $.each(data.Search, function(i , movie) {
+         console.log(data.Search);
+         if((movie.imdbID == "tt0265245"))
+           {
+            //"Jimi Hendrix at Woodstock" returning N/A....filter it out of array
+           }
+           else
+          {
+            array.push(OMDBAPI + movie.id);
+            movieHTML += '<li class="layout" data-name="' + movie.Year + '">';
+            movieHTML += '<a href="' + movie.Poster + '" data-lightbox="albums" data-title="';
+            movieHTML += 'Title: ' + movie.Title + '</br>';
+            movieHTML += 'Release Date: ' + movie.Year + '</br>';
+            movieHTML += 'Movie ID: ' + movie.imdbID + '</br>';
+            movieHTML += '">';
+            movieHTML += '<img src="' + movie.Poster + '" alt="' + movie.Title + '"></a></li>';
+
+            $('#albums4').html(movieHTML);
+          }
 
 
-$('.movieButton1').click(function() {
-    tinysort('ul#albums4>li', { attr: 'data-name' });
-});
+      });
 
-$('.movieButton2').click(function() {
-    tinysort('ul#albums4>li', { selector: 'img', attr: 'alt' });
-});
+
+  });
+
+
+  $('.movieButton1').click(function() {
+      tinysort('ul#albums4>li', { attr: 'data-name' });
+  });
+
+  $('.movieButton2').click(function() {
+      tinysort('ul#albums4>li', { selector: 'img', attr: 'alt' });
+  });
 
 /*!
  * Lightbox v2.8.2
