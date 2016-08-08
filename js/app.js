@@ -129,7 +129,7 @@ $('.button2').click(function() {
 // });
 
 
-var loadOne = $(document).ready(function() {
+$(document).ready(function() {
 
 
 var spotifyAPI = "https://api.spotify.com/v1/search";
@@ -188,9 +188,8 @@ getAlbumInfo(function(result) {
                 type: "album",
                 limit: 12
             }, function(data) {
-                 audioObject = new Audio(data.tracks.items[0].preview_url);
+                // audioObject = new Audio(data.tracks.items[0].preview_url);
                 //audioObject.play();
-                
 
                 albumHTML += '<li data-name="' + data.artists[0].name + '">';
                 albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
@@ -204,10 +203,43 @@ getAlbumInfo(function(result) {
 
                 $('#albums').html(albumHTML);
 
+                $('#albums').click(function(e){
+                 //target = e.target;
+                 target = $(this);
+
+                audioObject = new Audio(data.tracks.items[0].preview_url);
+
+                if (target !== null) {
+                //  audioObject.play();
+                if (target.hasClass(playingCssClass)) {
+                    audioObject.pause();
+                    } else {
+                if (audioObject) {
+                //audioObject.pause();
+                }
+
+              //  audioObject = new Audio(data.tracks.items[0].preview_url);
+                audioObject.play();
+                target.addClass(playingCssClass);
+                audioObject.addEventListener('ended', function () {
+                    target.removeClass(playingCssClass);
+                });
+                audioObject.addEventListener('pause', function () {
+                    target.removeClass(playingCssClass);
+                });
+
+
+        }
+    }
+               });
 
 
                 $('.musicButton1').click(function() {
                     tinysort('ul#albums>li', { selector: 'img', attr: 'alt' });
+                });
+
+                $('.musicButton2').click(function() {
+                    tinysort('ul#albums>li', { selector: 'img', attr: 'photo_index' });
                 });
             });
         });
@@ -219,13 +251,9 @@ getAlbumInfo(function(result) {
  });
 
 
-  $('.musicButton1').click(function() {
-      tinysort('ul#albums>li', { attr: 'data-name' });
-  });
 
-  $('.musicButton2').click(function() {
-      tinysort('ul#albums>li', { selector: 'img', attr: 'photo_index' });
-  });
+
+  
 
 
 
