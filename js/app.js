@@ -17,7 +17,6 @@ var flickrOptions = {
 //  tags: "german shepherd, border collie, black terrier",
   tagmode: "any",
   id: "125100549@N08",
-
   format: "json"
 };
 
@@ -25,7 +24,6 @@ var flickrOptions = {
 
 function displayPhotos(data) {
   var photoHTML = '';
-
   var saved_results = data;
   var indexOfImage;
   $.each(data.items,function(i,photo) {
@@ -55,26 +53,9 @@ $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 
 
 // end of first API Request and JSON callback on initial page load
-//
-//
-// Beginning of 2nd API request
 
-// $(".flickrButtons").click(function (event) {
-//     event.preventDefault();//
-//     //event.stopPropagation();
-//     // the AJAX part
-//     var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-//     var animal = $(this).text();
-//     var flickrOptions = {
-//       tags: "new orleans, forest, louisiana",
-//       format: "json"
-//     };
-//
-//     $.getJSON(flickerAPI, flickrOptions, displayPhotos);
-//
-//
-//
-//
+
+
 $('.button1').click(function() {
     tinysort('ul#imageGallery>li>a', { attr: 'href' });
 });
@@ -86,7 +67,7 @@ $('.button2').click(function() {
 
 
 
-//  });
+
 
 
 
@@ -127,6 +108,130 @@ $('.button2').click(function() {
 //
 // 	}
 // });
+
+//
+// $(document).ready(function() {
+//
+//
+// var spotifyAPI = "https://api.spotify.com/v1/search";
+// var albumHTML = "";
+// var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
+// var  playingCssClass = 'playing';
+// var audioObject = null;
+// var search = "Firebug";
+//
+// //function to get individual album api:
+// function getAlbumInfo(callback) {
+//     $.getJSON(spotifyAPI, {
+//         q: search,
+//         type: "album",
+//         limit: 12,
+//     }, function(data) {
+//
+//         var array = [];
+//
+//
+//         $.each(data.albums.items, function(i, album) {
+//            console.log(data.albums.items);
+//
+//            // filter out albums/collections from array that are not my band's songs &/or albums..get IDs from array/objects logged out to console
+//             if((album.id == "6HWxqdryeaBrcVNExMyzXC")||(album.id == "2NeiklEJ3gQE7bV9cp27hZ")||(album.id == "5sah14CPmQ1v2FUp2AKDql")||(album.id == "2GLF9bjkeGaKSiPAyLEWRb"))
+//          {
+//
+//          }
+//          else
+//          {
+//           // push our albums to the array
+//           array.push(spotifyAlbumAPI + album.id);
+//
+//         }
+//
+//
+//         });
+//
+//
+//         callback(array);
+//
+//
+//     });
+//
+//
+// }
+
+// getAlbumInfo(function(result) {
+//
+//     //get additional info from api to create photo list:
+//     function createAlbumList() {
+//
+//         $.each(result, function(i, album) {
+//             $.getJSON(result[i], {
+//                 q: search,
+//                 type: "album",
+//                 limit: 12
+//             }, function(data) {
+//                 // audioObject = new Audio(data.tracks.items[0].preview_url);
+//                 //audioObject.play();
+//
+//                 albumHTML += '<li data-name="' + data.artists[0].name + '">';
+//                 albumHTML += '<a href="' + data.images[0].url + '" data-lightbox="albums" data-title="';
+//                 albumHTML += 'Album Name: ' + data.name + '</br>';
+//                 albumHTML += 'Audio Tracks: ' + data.tracks.items[0].preview_url + '</br>';
+//                 albumHTML += 'Artist Name: ' + data.artists[0].name + '</br>';
+//                 albumHTML += 'Release Date: ' + data.release_date + '</br>';
+//                 albumHTML += 'SpotifyURL: ' + data.external_urls.spotify + '</br>';
+//                 albumHTML += '">';
+//                 albumHTML += '<img src="' + data.images[0].url + '"alt="' + data.name + '"></a></li>';
+//
+//                 $('#albums').html(albumHTML);
+//
+//                 $('#albums').click(function(e){
+//                  //target = e.target;
+//                  //$('albums').removeClass("selected");
+//                  //target = $(this).addClass("selected");
+//
+//                 audioObject = new Audio(data.tracks.items[0].preview_url);
+//
+//                 if (target !== null) {
+//                 //  audioObject.play();
+//
+//                 if (target.hasClass(playingCssClass)) {
+//                     audioObject.pause();
+//                     } else {
+//                 if (audioObject) {
+//                 //audioObject.pause();
+//                 }
+//
+//               //  audioObject = new Audio(data.tracks.items[0].preview_url);
+//                 audioObject.play();
+//                 target.addClass(playingCssClass);
+//                 audioObject.addEventListener('ended', function () {
+//                     target.removeClass(playingCssClass);
+//                 });
+//                 audioObject.addEventListener('pause', function () {
+//                     target.removeClass(playingCssClass);
+//                 });
+//
+//
+//         }
+//     }
+//                });
+//
+//
+//                 $('.musicButton1').click(function() {
+//                     tinysort('ul#albums>li', { selector: 'img', attr: 'alt' });
+//                 });
+//
+//                 $('.musicButton2').click(function() {
+//                     tinysort('ul#albums>li', { selector: 'img', attr: 'photo_index' });
+//                 });
+//             });
+//         });
+//     }
+//
+//     createAlbumList();
+// });
+//
+//  });
 
 
 $(document).ready(function() {
@@ -249,43 +354,6 @@ getAlbumInfo(function(result) {
 });
 
  });
-
-
-
-
-  
-
-
-
-
-
-
-//   $('#albums').addEventListener('click', function (e) {//Click on album cover to get audio
-//
-//     var target = e.target;
-//     if (target !== null ) {
-//         if (target.classList.contains(playingCssClass)) {
-//             audioObject.pause();
-//         } else {
-//             if (audioObject) {
-//                 audioObject.pause();
-//             }
-//             getAlbumInfo(target.getAttribute('data-album-id'), function (data) {
-//                 audioObject = new Audio(data.tracks.items[0].preview_url);
-//                 audioObject.play();
-//                 target.classList.add(playingCssClass);
-//                 audioObject.addEventListener('ended', function () {
-//                     target.classList.remove(playingCssClass);
-//                 });
-//                 audioObject.addEventListener('pause', function () {
-//                     target.classList.remove(playingCssClass);
-//                 });
-//
-//             });
-//         }
-//     }
-//
-// });
 
 
 

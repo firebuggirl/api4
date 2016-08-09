@@ -13,7 +13,6 @@ var flickrOptions = {
 //  tags: "german shepherd, border collie, black terrier",
   tagmode: "any",
   id: "125100549@N08",
-
   format: "json"
 };
 
@@ -21,7 +20,6 @@ var flickrOptions = {
 
 function displayPhotos(data) {
   var photoHTML = '';
-
   var saved_results = data;
   var indexOfImage;
   $.each(data.items,function(i,photo) {
@@ -51,26 +49,9 @@ $.getJSON(flickerAPI, flickrOptions, displayPhotos);
 
 
 // end of first API Request and JSON callback on initial page load
-//
-//
-// Beginning of 2nd API request
 
-// $(".flickrButtons").click(function (event) {
-//     event.preventDefault();//
-//     //event.stopPropagation();
-//     // the AJAX part
-//     var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-//     var animal = $(this).text();
-//     var flickrOptions = {
-//       tags: "new orleans, forest, louisiana",
-//       format: "json"
-//     };
-//
-//     $.getJSON(flickerAPI, flickrOptions, displayPhotos);
-//
-//
-//
-//
+
+
 $('.button1').click(function() {
     tinysort('ul#imageGallery>li>a', { attr: 'href' });
 });
@@ -82,7 +63,7 @@ $('.button2').click(function() {
 
 
 
-//  });
+
 
 
 

@@ -170,7 +170,7 @@ ul.filter-select button {
   }
 }
 ul.filter-select button:hover:after, ul.filter-select button.selected:after, li:last-child ul.filter-select button:after {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  /*filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);*/
   opacity: 0;
 }
 ul.filter-select button:hover {
