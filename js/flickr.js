@@ -6,7 +6,7 @@ var flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne?jsonca
 
 
 
-var animal = $(this).text();
+//var animal = $(this).text();
 
 
 var flickrOptions = {
