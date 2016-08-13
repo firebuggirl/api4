@@ -116,6 +116,7 @@ var spotifyAPI = "https://api.spotify.com/v1/search";
 var spotifyAlbumAPI = "https://api.spotify.com/v1/albums/";
 var search = "Firebug";
 
+
 //function to get individual album api:
 function getAlbumInfo(callback) {
 
@@ -144,45 +145,69 @@ function getAlbumInfo(callback) {
 
 
 
-        }
+        }//end else
 
-        });
+      });//end each
 
 
         callback(array);
 
 
-    });
+    });//end JSON
 
 
-}
+}//end callback
 
-        getAlbumInfo(function(result) {
-
-
-
-                                    //defined elsewhere for clarity
-                                    function clickAlbum(data) {
-                                      return function(e) {
-                                         // this is the function the click event will use
-                                         //data variable is captured here
-
-                                         var  playingCssClass = 'playing',
-                                          audioObject = new Audio(data.tracks.items[0].preview_url),
-                                          target = $(this);
-
-                                        e.preventDefault();
-                                        target.append(audioObject);
-                                        if (target.hasClass(playingCssClass)) {
-                                         audioObject.pause();
-                                         }
-                                         else {
-                                            audioObject.play();
-                                         }
+//////////////////////////////////////////////////////////////////
 
 
-                                      }
-                                    }
+
+
+       getAlbumInfo(function(result) {
+
+
+
+                    //defined elsewhere for clarity
+                      function clickAlbum(data) {
+                      return function(e) {
+                      // this is the function the click event will use
+                      //data variable is captured here
+
+                      var  playingCssClass = 'playing',
+                      audioObject = new Audio(data.tracks.items[0].preview_url),
+                      target = $(this);
+
+
+
+                      e.preventDefault();
+                     target.append(audioObject);
+                      if (target.hasClass(playingCssClass)) {
+                           audioObject.pause();
+                         }
+                           else {
+                            audioObject.play();
+                              }
+
+                              $('#lightbox').click(function(e){
+                                e.preventDefault();
+                                audioObject.pause();
+                              });
+
+                              $('.lb-close').click(function(e){
+                                e.preventDefault();
+                                audioObject.pause();
+                              });
+
+                              
+
+
+                          }
+
+
+
+                }//end function clickAlbum
+
+                ///////////////////////////////////////////////////////////
 
 
 
@@ -214,12 +239,17 @@ function getAlbumInfo(callback) {
         var $albumHTML = $(albumHTML).find('a').click(clickAlbum(data));
         $('#albums').append($albumHTML);
 
+
         // ...
       });
+
   });
 }
 
   createAlbumList();
+
+
+
  });
 
 
