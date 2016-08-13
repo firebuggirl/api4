@@ -198,14 +198,14 @@ function getAlbumInfo(callback) {
                                 audioObject.pause();
                               });
 
-                              
-
-
-                          }
 
 
 
-                }//end function clickAlbum
+                          }//end function clickAlbum
+
+
+
+                }//getAlbumInfo(function(result)
 
                 ///////////////////////////////////////////////////////////
 
@@ -236,8 +236,10 @@ function getAlbumInfo(callback) {
 
         // Wrap the string in a jQuery object, find the link element, and attach the click handler
         // with the current album data.
-        var $albumHTML = $(albumHTML).find('a').click(clickAlbum(data));
-        $('#albums').append($albumHTML);
+        var $clone = $(albumHTML).clone( true );//clone albumHTML so when dom elements are removed the information is still there?
+        var $findAudio = $clone.find('a').click(clickAlbum(data));//parentNode gets removed when calling on data for specific object, use clone to clone albumHTML (deeply) so data/innerHTML is always available for audio on image click AND for data sorting on button click(s)
+      
+        $('#albums').append($clone);
 
 
         // ...
@@ -254,6 +256,10 @@ function getAlbumInfo(callback) {
 
 
  $('.musicButton1').click(function() {
+  // var $clone = $(albumHTML).clone();
+  //   var $albumHTML = $(albumHTML).find('a').click(clickAlbum(data));
+  // $clone.show();
+  // $albumHTML.hide();
     tinysort('ul#albums>li', { selector: 'a', attr: 'href' });
  });
 
