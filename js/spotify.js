@@ -22,21 +22,12 @@ function getAlbumInfo(callback) {
            console.log(data.albums.items);
 
 
-        //    // filter out albums/collections from array that are not my band's songs &/or albums..get IDs from array/objects logged out to console
-            if((album.id == "6HWxqdryeaBrcVNExMyzXC")||(album.id == "2NeiklEJ3gQE7bV9cp27hZ")||(album.id == "5sah14CPmQ1v2FUp2AKDql")||(album.id == "2GLF9bjkeGaKSiPAyLEWRb"))
-         {
+                 if((album.id !== "6HWxqdryeaBrcVNExMyzXC")&&(album.id !== "2NeiklEJ3gQE7bV9cp27hZ")&&(album.id !== "5sah14CPmQ1v2FUp2AKDql")&&(album.id !== "2GLF9bjkeGaKSiPAyLEWRb"))
+                     {
+                      array.push(spotifyAlbumAPI + album.id);
+                    }
 
-         }
-         else
-         {
-          // push our albums to the array
-          array.push(spotifyAlbumAPI + album.id);
-
-
-
-        }//end else
-
-      });//end each
+          });//end each
 
 
         callback(array);
@@ -57,35 +48,34 @@ function getAlbumInfo(callback) {
 
 
                     //defined elsewhere for clarity
-                      function clickAlbum(data) {
+                    function clickAlbum(data) {
                       return function(e) {
                       // this is the function the click event will use
                       //data variable is captured here
 
-                      var  playingCssClass = 'playing',
-                      audioObject = new Audio(data.tracks.items[0].preview_url),
-                      target = $(this);
+                       var  playingCssClass = 'playing',
+                       audioObject = new Audio(data.tracks.items[0].preview_url),
+                       target = $(this);
 
+                       e.preventDefault();
+                       target.append(audioObject);
 
-
-                      e.preventDefault();
-                     target.append(audioObject);
-                      if (target.hasClass(playingCssClass)) {
-                           audioObject.pause();
-                         }
+                         if (target.hasClass(playingCssClass)) {
+                             audioObject.pause();
+                             }
                            else {
-                            audioObject.play();
-                              }
+                             audioObject.play();
+                            }
 
-                              $('#lightbox').click(function(e){
+                            $('#lightbox').click(function(e){
                                 e.preventDefault();
                                 audioObject.pause();
-                              });
+                            });
 
-                              $('.lb-close').click(function(e){
+                            $('.lb-close').click(function(e){
                                 e.preventDefault();
                                 audioObject.pause();
-                              });
+                            });
 
 
 
@@ -125,9 +115,9 @@ function getAlbumInfo(callback) {
 
         // Wrap the string in a jQuery object, find the link element, and attach the click handler
         // with the current album data.
-        var $clone = $(albumHTML).clone( true );//clone albumHTML so when dom elements are removed the information is still there?
+        var $clone = $(albumHTML).clone( true );//clone albumHTML so when dom elements are removed the information/data is still available
         var $findAudio = $clone.find('a').click(clickAlbum(data));//parentNode gets removed when calling on data for specific object, use clone to clone albumHTML (deeply) so data/innerHTML is always available for audio on image click AND for data sorting on button click(s)
-      
+
         $('#albums').append($clone);
 
 
@@ -145,10 +135,7 @@ function getAlbumInfo(callback) {
 
 
  $('.musicButton1').click(function() {
-  // var $clone = $(albumHTML).clone();
-  //   var $albumHTML = $(albumHTML).find('a').click(clickAlbum(data));
-  // $clone.show();
-  // $albumHTML.hide();
+
     tinysort('ul#albums>li', { selector: 'a', attr: 'href' });
  });
 
