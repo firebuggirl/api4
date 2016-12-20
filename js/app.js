@@ -26,27 +26,43 @@ function displayPhotos(data) {
   var photoHTML = '';
   var saved_results = data;
   var indexOfImage;
+  // $.each(data.items,function(i,photo) {
+  //
+  //   if(i < 16){
+  //              console.log(data.items);//log out data items to find key/value pairs in data array
+  //               photoHTML += '<li class="layout">';
+  //               photoHTML += '<a href="' + data.items[i].media.m + '" data-lightbox="image" data-title="';
+  //               photoHTML += 'Photo Title: ' + data.items[i].title + '</br>';
+  //               photoHTML += 'Author: ' + data.items[i].author + '</br>';
+  //               photoHTML += 'Photo Date: ' + data.items[i].date_taken + '</br>';
+  //               photoHTML += 'Photo description: ' + data.items[i].description.replace(/<(?:.|\n)*?>/gm, ''); + '</br>';//use reg expression to delete HTML tags thar are inside of description key value-for proper page load and keep gallery from breaking
+  //               photoHTML += '">';
+  //               photoHTML += '<img alt="" + src="' + data.items[i].media.m + '" photo_index ="' + i + '"></a></li>';
+  //
+  // }
+  //
+  //
+  // }); // end each
+  // //photoHTML += '</ul>';
+  // $('#imageGallery').html(photoHTML);
+
   $.each(data.items,function(i,photo) {
+      if(i < 16){
 
-    if(i < 16){
-               console.log(data.items);//log out data items to find key/value pairs in data array
-                photoHTML += '<li class="layout">';
-                photoHTML += '<a href="' + data.items[i].media.m + '" data-lightbox="image" data-title="';
-                photoHTML += 'Photo Title: ' + data.items[i].title + '</br>';
-                photoHTML += 'Author: ' + data.items[i].author + '</br>';
-                photoHTML += 'Photo Date: ' + data.items[i].date_taken + '</br>';
-                photoHTML += 'Photo description: ' + data.items[i].description.replace(/<(?:.|\n)*?>/gm, ''); + '</br>';//use reg expression to delete HTML tags thar are inside of description key value-for proper page load and keep gallery from breaking
-                photoHTML += '">';
-                photoHTML += '<img alt="" + src="' + data.items[i].media.m + '" photo_index ="' + i + '"></a></li>';
+     photoHTML += '<li class="layout">';
 
-  }
+     photoHTML += '<a href="' + photo.media.m + '" data-lightbox="image" data-title="';
+                  photoHTML += 'Photo Title: ' + data.title + '</br>';
+                  photoHTML += 'Photo Date: ' + data.items.date_taken + '</br>';
+                  photoHTML += '">';
+                  photoHTML += '<img alt="" src="' + photo.media.m + '" photo_index ="' + i + '"></a></li>';
+
+    }
 
 
-  }); // end each
-  //photoHTML += '</ul>';
-  $('#imageGallery').html(photoHTML);
-
-
+    }); // end each
+    photoHTML += '</ul>';
+    $('#imageGallery').html(photoHTML);
 
 }//end callback for the api request
 $.getJSON(flickerAPI, flickrOptions, displayPhotos);
@@ -132,7 +148,7 @@ function getAlbumInfo(callback) {
         $.each(data.albums.items, function(i, album) {
            console.log(data.albums.items);
 
-
+              //filter out albums that are not ours!
                  if((album.id !== "6HWxqdryeaBrcVNExMyzXC")&&(album.id !== "2NeiklEJ3gQE7bV9cp27hZ")&&(album.id !== "5sah14CPmQ1v2FUp2AKDql")&&(album.id !== "2GLF9bjkeGaKSiPAyLEWRb"))
                      {
                       array.push(spotifyAlbumAPI + album.id);
@@ -246,10 +262,7 @@ function getAlbumInfo(callback) {
 
 
  $('.musicButton1').click(function() {
-  // var $clone = $(albumHTML).clone();
-  //   var $albumHTML = $(albumHTML).find('a').click(clickAlbum(data));
-  // $clone.show();
-  // $albumHTML.hide();
+
     tinysort('ul#albums>li', { selector: 'a', attr: 'href' });
  });
 

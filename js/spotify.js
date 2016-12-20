@@ -21,7 +21,7 @@ function getAlbumInfo(callback) {
         $.each(data.albums.items, function(i, album) {
            console.log(data.albums.items);
 
-
+              //filter out albums that are not ours!
                  if((album.id !== "6HWxqdryeaBrcVNExMyzXC")&&(album.id !== "2NeiklEJ3gQE7bV9cp27hZ")&&(album.id !== "5sah14CPmQ1v2FUp2AKDql")&&(album.id !== "2GLF9bjkeGaKSiPAyLEWRb"))
                      {
                       array.push(spotifyAlbumAPI + album.id);
